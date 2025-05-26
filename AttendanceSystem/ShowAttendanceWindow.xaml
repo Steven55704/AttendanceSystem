@@ -1,0 +1,267 @@
+﻿<Window x:Class="SchoolAttendance.ShowAttendanceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SchoolAttendance"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Background="#FF121212"
+        BorderBrush="Transparent"
+        AllowsTransparency="True"
+        Title="Section"
+        Height="600"
+        Width="800">
+
+    <Window.Resources>
+
+        <LinearGradientBrush x:Key="GradientBorderBrush" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Color="#38B0DA" Offset="0.0"/>
+            <GradientStop Color="#5E98D3" Offset="0.10"/>
+            <GradientStop Color="#6F8DD0" Offset="0.20"/>
+            <GradientStop Color="#8381CD" Offset="0.25"/>
+            <GradientStop Color="#9B71C8" Offset="0.35"/>
+            <GradientStop Color="#B660C3" Offset="0.45"/>
+            <GradientStop Color="#C96AAA" Offset="0.55"/>
+            <GradientStop Color="#CA8095" Offset="0.65"/>
+            <GradientStop Color="#CA9B7B" Offset="0.75"/>
+            <GradientStop Color="#CBBB5D" Offset="0.85"/>
+            <GradientStop Color="#CCCF49" Offset="0.95"/>
+            <GradientStop Color="#CCE336" Offset="1.00"/>
+        </LinearGradientBrush>
+
+        <ControlTemplate x:Key="CustomCheckBoxTemplate" TargetType="CheckBox">
+            <Grid>
+                <Grid Width="14" Height="14" VerticalAlignment="Center">
+                    <Border x:Name="border"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="1"
+            CornerRadius="2"/>
+
+                    <!-- Scaled checkmark inside the box -->
+                    <Grid Width="10" Height="10" VerticalAlignment="Center">
+                        <Viewbox Stretch="Uniform">
+                            <Path x:Name="checkMark"
+                  Data="M 0 6 L 5 11 L 12 0"
+                  Stroke="LimeGreen"
+                  StrokeThickness="2"
+                  StrokeStartLineCap="Round"
+                  StrokeEndLineCap="Round"
+                  StrokeLineJoin="Round"
+                  Visibility="Collapsed"/>
+                        </Viewbox>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter TargetName="checkMark" Property="Visibility" Value="Visible"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Background" Value="#FF2B2B2B"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0,0,0,0.8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource GradientBorderBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource GradientBorderBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid>
+        <Grid MouseDown="DragWindow" Background="#0C0C0C" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left" Width="800">
+            <TextBlock Text="Click this button if you want to exit/unchange/not save the edit →" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="423,7,0,0" />
+            <Button Click="CloseButton_Click" Cursor="Hand" Background="Transparent" Foreground="White" BorderThickness="0" FontSize="16" Margin="768,0,0,0" Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Left">
+                <Image Source="/Resources/exit.png" Width="16" Height="16" Stretch="Uniform"/>
+            </Button>
+        </Grid>
+
+        <Border Height="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,32,0,0" Width="800">
+            <Border.Background>
+                <LinearGradientBrush x:Name="RainbowGradient" StartPoint="0,0" EndPoint="1,0" SpreadMethod="Repeat">
+                    <GradientStop Color="#38B0DA" Offset="0.0"/>
+                    <GradientStop Color="#5E98D3" Offset="0.10"/>
+                    <GradientStop Color="#6F8DD0" Offset="0.20"/>
+                    <GradientStop Color="#8381CD" Offset="0.25"/>
+                    <GradientStop Color="#9B71C8" Offset="0.35"/>
+                    <GradientStop Color="#B660C3" Offset="0.45"/>
+                    <GradientStop Color="#C96AAA" Offset="0.55"/>
+                    <GradientStop Color="#CA8095" Offset="0.65"/>
+                    <GradientStop Color="#CA9B7B" Offset="0.75"/>
+                    <GradientStop Color="#CBBB5D" Offset="0.85"/>
+                    <GradientStop Color="#CCCF49" Offset="0.95"/>
+                    <GradientStop Color="#CCE336" Offset="1.00"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+
+        <TextBlock Text="Section: " Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="26,50,0,0" />
+        <TextBox x:Name="TBSection"  Height="16" Width="128" Background="#FF2B2B2B" Foreground="White" BorderBrush="{StaticResource GradientBorderBrush}" BorderThickness="0,0,0,0.8" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="68,50,0,0"/>
+
+        <TextBlock Text="Date: " Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="32,76,0,0" />
+        <TextBox x:Name="TBDate"  Height="16" Width="128" Background="#FF2B2B2B" Foreground="White" BorderBrush="{StaticResource GradientBorderBrush}" BorderThickness="0,0,0,0.8" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="68,76,0,0"/>
+
+        <TextBlock Text="Subject: " Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="204,50,0,0" />
+        <TextBox x:Name="TBSubject"  Height="16" Width="144" Background="#FF2B2B2B" Foreground="White" BorderBrush="{StaticResource GradientBorderBrush}" BorderThickness="0,0,0,0.8" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="249,50,0,0"/>
+
+        <!--
+        <Button Content="Export to .xlsx" Click="ExportToExcel" Cursor="Hand" Margin="224,55,0,0" Padding="10,2" Background="Black" Foreground="White" BorderThickness="0" FontWeight="SemiBold" HorizontalAlignment="Left" Width="100" Height="32" VerticalAlignment="Top">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" 
+                                CornerRadius="8" 
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#2A2A2A"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        -->
+
+        <TextBlock Text="Type confirm to continue deletion:" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="438,56,0,0" Width="184" />
+        <TextBox x:Name="TBDeleteConfirmation" TextChanged="TBDeleteConfirmation_TextChanged" Height="16" Width="66" Background="#FF2B2B2B" Foreground="White" BorderBrush="{StaticResource GradientBorderBrush}" BorderThickness="0,0,0,0.8" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="622,56,0,0"/>
+        <CheckBox x:Name="CheckBoxConfirmDelete" Content="Confirm" Checked="CBConfirmDelete_Checked" Unchecked="CBConfirmDelete_Unchecked" Foreground="White" Background="#FF2B2B2B" HorizontalAlignment="Left" Margin="622,73,0,0" VerticalAlignment="Top" Width="66" BorderBrush="#FF484848">
+            <CheckBox.Template>
+                <ControlTemplate TargetType="CheckBox">
+                    <Grid>
+                        <Grid Width="14" Height="14" VerticalAlignment="Center" Margin="0,0,46,0">
+                            <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="2"/>
+
+                            <!-- Scaled checkmark inside the box -->
+                            <Grid Width="10" Height="10" VerticalAlignment="Center">
+                                <Viewbox Stretch="Uniform">
+                                    <Path x:Name="checkMark"
+                                          Data="M 0 6 L 5 11 L 12 0"
+                                          Stroke="LimeGreen"
+                                          StrokeThickness="2"
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"
+                                          StrokeLineJoin="Round"
+                                          Visibility="Collapsed"/>
+                                </Viewbox>
+                            </Grid>
+                        </Grid>
+
+                        <ContentPresenter x:Name="contentPresenter"
+                                  Content="{TemplateBinding Content}"
+                                  Margin="20,0,0,0"
+                                  VerticalAlignment="Center"
+                                  RecognizesAccessKey="True"/>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="checkMark" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="border" Property="Opacity" Value="0.5"/>
+                            <Setter TargetName="checkMark" Property="Stroke" Value="Gray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </CheckBox.Template>
+        </CheckBox>
+        <Button x:Name="NBTNDeleteSection" Content="Delete Section" IsEnabled="False" Cursor="Hand" Click="BTNDeleteSection" Background="#FFA00000" Foreground="White" Padding="10,5" Margin="694,56,0,0" BorderThickness="0" Width="96" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" 
+                CornerRadius="8" 
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#2A2A2A"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <!-- Table Headers -->
+        <Grid x:Name="TableHeader" Background="#7F404040" Height="32" HorizontalAlignment="Center" Width="800" Margin="0,104,0,0" VerticalAlignment="Top">
+            <TextBlock Text="Student Number" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" />
+            <TextBlock Text="Last Name" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="152,0,0,0" />
+            <TextBlock Text="First Name" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="270,0,0,0" />
+            <TextBlock Text="Middle Name" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="430,0,0,0" />
+            <TextBlock Text="Present" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="578,0,0,0" />
+            <TextBlock Text="Absent" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="636,0,0,0" />
+            <TextBlock Text="Late" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="694,0,0,0" />
+        </Grid>
+
+        <!-- Table Body Placeholder -->
+        <Border x:Name="StudentsContainerBorder" Background="#101010" BorderBrush="#2E2E2E" BorderThickness="0,0,0,0" Height="412" VerticalAlignment="Top" HorizontalAlignment="Center" Width="800" Margin="0,136,0,0">
+            <ScrollViewer x:Name="StudentRowsPanelContainer" VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Width="800" Height="412" VerticalAlignment="Center">
+                <StackPanel x:Name="StudentRowsPanel"/>
+            </ScrollViewer>
+            <!-- You can use DataGrid/ListView here for actual data binding -->
+        </Border>
+
+        <Button x:Name="BTNEditAttendance" Content="Edit" Cursor="Hand" Click="BTNEditAttendanceSection" Background="#1D1D1D" Foreground="White" Padding="10,5" Margin="694,558,0,0" BorderThickness="0" Width="96" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" 
+                                CornerRadius="8" 
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#2A2A2A"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+    </Grid>
+</Window>
